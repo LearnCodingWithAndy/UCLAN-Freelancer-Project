@@ -73,9 +73,7 @@ namespace UCLANProject
                             {
                                 if (manageCredits())
                                 {
-                                    checkOutMessage();
-                                    credits -= subTotal;
-                                    subTotal = 0.00;
+                                    checkOut();
                                     Console.WriteLine("\n\nThank you for buying with us");
                                 }
                                 else
@@ -139,7 +137,7 @@ namespace UCLANProject
             return areCreditsManaged;
         }
 
-        private void checkOutMessage()
+        private void checkOut()
         {
             const String dashline = "\n*******************************************************\n";
             Console.WriteLine(dashline);
@@ -148,6 +146,8 @@ namespace UCLANProject
             Console.WriteLine(dashline);
             Console.WriteLine("Your new Balance".PadRight(20, ' ') + " = " + string.Format("{0:0.00}", (credits - subTotal)) + " credits");
             Console.WriteLine(dashline);
+            credits -= subTotal;
+            subTotal = 0.00;
         }
 
         public void displayProductMenu()
@@ -157,11 +157,13 @@ namespace UCLANProject
             Console.WriteLine("\n" + dashline);
             Console.WriteLine("Product".PadRight(20, ' ') + "Cost (Credits)".PadRight(50, ' '));
             Console.WriteLine(dashline);
+
             foreach (var item in products)
             {
                 Console.WriteLine(index++ + ") " + item.Key.PadRight(20, ' ') + item.Value.ToString().PadRight(60, ' '));
             }
-            Console.WriteLine(index + " Return to Main Menu".PadRight(20, ' '));
+
+            Console.WriteLine(index + ") Return to Main Menu and Exit".PadRight(20, ' '));
             Console.Write("Please enter a number to select a Product: ");
         }
 
@@ -213,7 +215,6 @@ namespace UCLANProject
                                 break;
                             case 2:
                                 aVendingMachine.selectProduct();
-                                System.Environment.Exit(0);
                                 break;
                             case 3:
                                 Console.WriteLine("Thank You");
